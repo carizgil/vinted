@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Tienda de Ropa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'prendas/style.css' %}">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar px-4 py-3">
+    <span class="navbar-brand fw-semibold fs-5">👕 Mi Tienda de Ropa</span>
+    <button class="btn btn-dark" data-bs-toggle="collapse" data-bs-target="#formNueva">+ Añadir prenda</button>
+</nav>
+<!-- FORMULARIO NUEVA PRENDA -->
+<div class="collapse" id="formNueva">
+    <div class="container-fluid px-4 py-4 bg-white border-bottom">
+        <h5 class="mb-3">Nueva prenda</h5>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Tipo de prenda</label>
+                    <input type="text" name="tipo_de_prenda" class="form-control" placeholder="Ej: Camiseta">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Talla</label>
+                    <input type="text" name="talla" class="form-control" placeholder="M">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Color</label>
+                    <input type="text" name="color" class="form-control" placeholder="Azul">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Marca</label>
+                    <input type="text" name="marca" class="form-control" placeholder="Zara">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Dónde está subido</label>
+                    <input type="text" name="donde_esta_subido" class="form-control" placeholder="Vinted, Wallapop...">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Precio comprado (€)</label>
+                    <input type="number" step="0.01" name="precio_comprado" class="form-control" placeholder="0.00">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Precio de venta (€)</label>
+                    <input type="number" step="0.01" name="precio_vendido" class="form-control" placeholder="0.00">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Estado</label>
+                    <select name="estado" class="form-select">
+                        <option value="borrador">Borrador</option>
+                        <option value="disponible">Disponible</option>
+                        <option value="vendido">Vendido</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-dark w-100">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- TABS -->
+<div class="bg-white border-bottom px-4">
+    <ul class="nav nav-tabs border-bottom-0">
+        <li class="nav-item">
+            <a href="?estado=todas" class="nav-link {% if estado == 'todas' %}active{% endif %}">
+                Todas <span class="badge rounded-pill bg-primary ms-1">{{ total }}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="?estado=disponible" class="nav-link {% if estado == 'disponible' %}active{% endif %}">
+                Disponibles <span class="badge rounded-pill bg-primary ms-1">{{ disponibles }}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="?estado=vendido" class="nav-link {% if estado == 'vendido' %}active{% endif %}">
+                Vendidas <span class="badge rounded-pill bg-success ms-1">{{ vendidas }}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="?estado=borrador" class="nav-link {% if estado == 'borrador' %}active{% endif %}">
+                Borradores <span class="badge rounded-pill bg-secondary ms-1">{{ borradores }}</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- CONTENIDO -->
+<div class="container-fluid px-4 py-4">
+
+    <!-- STATS -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="text-muted small mb-1">👕 Total prendas</div>
+                <div class="stat-num">{{ total }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="text-muted small mb-1">✓ Vendidas</div>
+                <div class="stat-num text-success">{{ vendidas }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="text-muted small mb-1">📦 Disponibles</div>
+                <div class="stat-num">{{ disponibles }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="text-muted small mb-1">💰 Beneficio total</div>
+                <div class="stat-num {% if beneficio_total > 0 %}text-success{% else %}text-danger{% endif %}">
+                    {{ beneficio_total }}€
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- GRID PRENDAS -->
+    <div class="row g-3">
+        {% for prenda in prendas %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card prenda-card h-100">
+                <div class="card-img-top">👗</div>
+                <div class="card-body">
+                    <h6 class="card-title fw-semibold mb-1">{{ prenda.tipo_de_prenda }}</h6>
+                    <p class="text-muted small mb-2">Talla {{ prenda.talla }} · {{ prenda.marca }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold">{{ prenda.precio_vendido }}€</span>
+                        <span class="badge rounded-pill badge-{{ prenda.estado }}">
+                            {{ prenda.get_estado_display }}
+                        </span>
+                    </div>
+                    {% if prenda.beneficio %}
+                    <div class="mt-2 small">
+                        Comprado: {{ prenda.precio_comprado }}€ · 
+                        <span class="{% if prenda.beneficio > 0 %}text-success{% else %}text-danger{% endif %}">
+                            Beneficio: {{ prenda.beneficio }}€
+                        </span>
+                    </div>
+                    {% endif %}
+                    <a href="{% url 'editar_prenda' prenda.pk %}" class="btn btn-sm btn-outline-secondary mt-2 w-100">Editar</a>
+                    <a href="{% url 'eliminar_prenda' prenda.pk %}" class="btn btn-sm btn-outline-danger mt-1 w-100">Eliminar</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center text-muted py-5">
+            No hay prendas en esta categoría.
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
