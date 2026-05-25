@@ -25,6 +25,8 @@ def lista_prendas(request):
         if form.is_valid():
             form.save()
             return redirect('lista_prendas')
+        else:
+            print(form.errors)
         
     beneficio_total = sum(
         p.beneficio() for p in Prenda.objects.filter(estado='vendido') if p.beneficio() is not None)
