@@ -101,20 +101,6 @@
                         <option value="vendido">Vendido</option>
                     </select>
                 </div>
-                <div class="col-12">
-                    {% if form.errors %}
-                    <div class="alert alert-danger">
-                        <strong>Hay errores en el formulario:</strong>
-                        <ul class="mb-0 mt-1">
-                            {% for field, errors in form.errors.items %}
-                                {% for error in errors %}
-                                <li><strong>{{ field }}:</strong> {{ error }}</li>
-                                {% endfor %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {% endif %}
-                </div>
                 <div class="col-md-2 d-flex align-items-end">
                     <button type="submit" class="btn btn-dark w-100">Guardar</button>
                 </div>
