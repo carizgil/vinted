@@ -37,6 +37,10 @@
                     <label class="form-label">Marca</label>
                     <input type="text" name="marca" class="form-control" placeholder="Zara">
                 </div>
+                <div class="col-md-2">
+                    <label class="form-label">Localizador</label>
+                    <input type="text" name="localizador" class="form-control" placeholder="A1, B2...">
+                </div>
                 <div class="col-md-4">
                     <label class="form-label">Dónde está subido</label>
                     <input type="text" name="donde_esta_subido" class="form-control" placeholder="Vinted, Wallapop...">
@@ -130,6 +134,10 @@
                 <div class="card-img-top">👗</div>
                 <div class="card-body">
                     <h6 class="card-title fw-semibold mb-1">{{ prenda.tipo_de_prenda }}</h6>
+                    <h6 class="card-title fw-semibold mb-1">{{ prenda.tipo_de_prenda }}</h6>
+                    {% if prenda.localizador %}
+                    <span class="badge bg-secondary mb-1">{{ prenda.localizador }}</span>
+                    {% endif %}
                     <p class="text-muted small mb-2">Talla {{ prenda.talla }} · {{ prenda.marca }}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="fw-semibold">{{ prenda.precio_vendido }}€</span>

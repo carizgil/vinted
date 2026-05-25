@@ -15,6 +15,7 @@ class Prenda(models.Model):
     precio_comprado = models.DecimalField(max_digits=8, decimal_places=2)
     precio_vendido = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='borrador')
+    localizador = models.CharField(max_length=10, blank=True)
 
     def beneficio(self):
         if self.precio_vendido:
