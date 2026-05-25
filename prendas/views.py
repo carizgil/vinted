@@ -6,9 +6,19 @@ from .forms import PrendaForm
 def lista_prendas(request):
     estado = request.GET.get('estado', 'todas')
     
+    busqueda = request.GET.get('busqueda', '')
+
     prendas = Prenda.objects.all()
     if estado != 'todas':
         prendas = prendas.filter(estado=estado)
+    if busqueda:
+        prendas = prendas.filter(
+            tipo_de_prenda__icontains=busqueda
+        ) | prendas.filter(
+            marca__icontains=busqueda
+        ) | prendas.filter(
+            color__icontains=busqueda
+        )
 
     total = Prenda.objects.count()
     vendidas = Prenda.objects.filter(estado='vendido').count()
@@ -40,6 +50,7 @@ def lista_prendas(request):
         'borradores': borradores,
         'form': form,
         'beneficio_total': beneficio_total,
+        'busqueda': busqueda,
     })
 
 def editar_prenda(request, pk):
