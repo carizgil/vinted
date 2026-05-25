@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator
 from .models import Prenda
 from .forms import PrendaForm
 
@@ -14,6 +15,10 @@ def lista_prendas(request):
     disponibles = Prenda.objects.filter(estado='disponible').count()
     borradores = Prenda.objects.filter(estado='borrador').count()
 
+    paginator = Paginator(prendas, 8)
+    page_number = request.GET.get('page')
+    prendas = paginator.get_page(page_number)
+
     form = PrendaForm()
     if request.method == 'POST':
         form = PrendaForm(request.POST)
@@ -22,7 +27,7 @@ def lista_prendas(request):
             return redirect('lista_prendas')
         
     beneficio_total = sum(
-    p.beneficio() for p in Prenda.objects.filter(estado='vendido') if p.beneficio() is not None)
+        p.beneficio() for p in Prenda.objects.filter(estado='vendido') if p.beneficio() is not None)
 
     return render(request, 'prendas/lista_prendas.html', {
         'prendas': prendas,

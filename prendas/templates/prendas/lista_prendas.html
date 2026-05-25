@@ -155,6 +155,22 @@
             No hay prendas en esta categoría.
         </div>
         {% endfor %}
+        <!-- PAGINACIÓN -->
+        {% if prendas.has_other_pages %}
+        <div class="d-flex justify-content-center mt-4 gap-2">
+            {% if prendas.has_previous %}
+                <a href="?estado={{ estado }}&page={{ prendas.previous_page_number }}" class="btn btn-outline-secondary">← Anterior</a>
+            {% endif %}
+
+            <span class="btn btn-dark disabled">
+                Página {{ prendas.number }} de {{ prendas.paginator.num_pages }}
+            </span>
+
+            {% if prendas.has_next %}
+                <a href="?estado={{ estado }}&page={{ prendas.next_page_number }}" class="btn btn-outline-secondary">Siguiente →</a>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 
 </div>
