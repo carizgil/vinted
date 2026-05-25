@@ -7,6 +7,9 @@ def lista_prendas(request):
     estado = request.GET.get('estado', 'todas')
     
     busqueda = request.GET.get('busqueda', '')
+    filtro_talla = request.GET.get('talla', '')
+    filtro_marca = request.GET.get('marca', '')
+    orden = request.GET.get('orden', '')
 
     prendas = Prenda.objects.all()
     if estado != 'todas':
@@ -19,6 +22,17 @@ def lista_prendas(request):
         ) | prendas.filter(
             color__icontains=busqueda
         )
+    if filtro_talla:
+        prendas = prendas.filter(talla=filtro_talla)
+    if filtro_marca:
+        prendas = prendas.filter(marca__icontains=filtro_marca)
+    if orden == 'precio_asc':
+        prendas = prendas.order_by('precio_vendido')
+    elif orden == 'precio_desc':
+        prendas = prendas.order_by('-precio_vendido')
+
+    tallas = Prenda.objects.values_list('talla', flat=True).distinct()
+    marcas = Prenda.objects.values_list('marca', flat=True).distinct()
 
     total = Prenda.objects.count()
     vendidas = Prenda.objects.filter(estado='vendido').count()
@@ -51,6 +65,11 @@ def lista_prendas(request):
         'form': form,
         'beneficio_total': beneficio_total,
         'busqueda': busqueda,
+        'filtro_talla': filtro_talla,
+        'filtro_marca': filtro_marca,
+        'orden': orden,
+        'tallas': tallas,
+        'marcas': marcas,
     })
 
 def editar_prenda(request, pk):
