@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .models import Prenda
 from .forms import PrendaForm
+from django.http import HttpResponse
+import openpyxl
 
 def lista_prendas(request):
     estado = request.GET.get('estado', 'todas')
@@ -90,3 +92,31 @@ def eliminar_prenda(request, pk):
         prenda.delete()
         return redirect('lista_prendas')
     return render(request, 'prendas/confirmar_eliminar.html', {'prenda': prenda})
+
+def exportar_excel(request):
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Prendas"
+
+    # Cabeceras
+    ws.append(['Tipo', 'Talla', 'Color', 'Marca', 'Localizador', 'Donde subido', 'Precio comprado', 'Precio vendido', 'Beneficio', 'Estado'])
+
+    # Datos
+    for prenda in Prenda.objects.all():
+        ws.append([
+            prenda.tipo_de_prenda,
+            prenda.talla,
+            prenda.color,
+            prenda.marca,
+            prenda.localizador,
+            prenda.donde_esta_subido,
+            float(prenda.precio_comprado),
+            float(prenda.precio_vendido) if prenda.precio_vendido else '',
+            float(prenda.beneficio()) if prenda.beneficio() else '',
+            prenda.get_estado_display(),
+        ])
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="prendas.xlsx"'
+    wb.save(response)
+    return response
