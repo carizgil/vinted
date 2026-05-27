@@ -1,30 +1,69 @@
 /* GENERAL */
+* { box-sizing: border-box; }
+
 body {
-    background: #f5f5f5;
+    background: #f0f0f0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     color: #1a1a1a;
 }
 
 /* NAV */
 .navbar {
+    background: #1a1a1a;
+    border-bottom: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.navbar-brand {
+    color: white !important;
+    font-size: 17px;
+    letter-spacing: -0.3px;
+}
+
+.navbar .btn-dark {
     background: white;
-    border-bottom: 1px solid #e5e5e5;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    color: #1a1a1a;
+    border-color: white;
+    font-weight: 500;
+}
+
+.navbar .btn-dark:hover {
+    background: #f0f0f0;
+    border-color: #f0f0f0;
+    color: #1a1a1a;
+}
+
+.navbar .btn-outline-secondary {
+    border-color: rgba(255,255,255,0.3);
+    color: white;
+}
+
+.navbar .btn-outline-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border-color: rgba(255,255,255,0.5);
+}
+
+/* BUSCADOR Y FILTROS */
+.bg-white.border-bottom {
+    background: white !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
 /* TABS */
 .nav-tabs {
     border-bottom: none;
-    gap: 4px;
+    gap: 2px;
 }
 
 .nav-tabs .nav-link {
     color: #888;
     border: none;
-    padding: 10px 16px;
-    border-radius: 8px 8px 0 0;
+    padding: 12px 18px;
+    border-radius: 0;
     font-size: 14px;
-    transition: color 0.15s ease;
+    transition: all 0.15s ease;
+    border-bottom: 2px solid transparent;
 }
 
 .nav-tabs .nav-link.active {
@@ -36,57 +75,56 @@ body {
 
 .nav-tabs .nav-link:hover {
     color: #1a1a1a;
-    background: #f5f5f5;
+    background: #f8f8f8;
 }
 
 /* STATS */
 .stat-card {
     background: white;
-    border-radius: 14px;
-    padding: 20px 24px;
-    border: 1px solid #e5e5e5;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border-radius: 16px;
+    padding: 22px 24px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: transform 0.15s ease;
 }
 
-.stat-label {
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 6px;
+.stat-card:hover {
+    transform: translateY(-2px);
 }
 
 .stat-num {
-    font-size: 34px;
+    font-size: 36px;
     font-weight: 700;
-    margin-top: 2px;
-    letter-spacing: -1px;
+    margin-top: 4px;
+    letter-spacing: -1.5px;
 }
 
 /* CARDS PRENDAS */
 .prenda-card {
-    border-radius: 14px;
-    border: 1px solid #ececec;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     background: white;
     overflow: hidden;
 }
 
 .prenda-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.09);
+    transform: translateY(-5px);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.1);
 }
 
 .card-img-top {
-    height: 130px;
+    height: 140px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 52px;
-    background: linear-gradient(135deg, #fdf0f5, #f5eeff);
-    border-radius: 0;
+    font-size: 56px;
+    background: linear-gradient(135deg, #fce4ec, #ede7f6);
 }
 
 .card-body {
-    padding: 14px;
+    padding: 16px;
 }
 
 .card-title {
@@ -97,32 +135,36 @@ body {
 
 /* BADGES ESTADO */
 .badge-disponible {
-    background: #e6f1fb;
-    color: #185fa5;
+    background: #e3f2fd;
+    color: #1565c0;
     font-weight: 500;
-    font-size: 12px;
+    font-size: 11px;
+    padding: 4px 10px;
 }
 
 .badge-vendido {
-    background: #eaf3de;
-    color: #3b6d11;
+    background: #e8f5e9;
+    color: #2e7d32;
     font-weight: 500;
-    font-size: 12px;
+    font-size: 11px;
+    padding: 4px 10px;
 }
 
 .badge-borrador {
-    background: #f1efe8;
-    color: #5f5e5a;
+    background: #f5f5f5;
+    color: #616161;
     font-weight: 500;
-    font-size: 12px;
+    font-size: 11px;
+    padding: 4px 10px;
 }
 
-/* BOTONES */
+/* BOTONES GENERALES */
 .btn-dark {
     background: #1a1a1a;
     border-color: #1a1a1a;
     border-radius: 8px;
     font-size: 14px;
+    font-weight: 500;
 }
 
 .btn-dark:hover {
@@ -131,8 +173,8 @@ body {
 }
 
 .btn-outline-secondary {
-    border-color: #e5e5e5;
-    color: #666;
+    border-color: #e0e0e0;
+    color: #555;
     font-size: 13px;
     border-radius: 8px;
 }
@@ -140,12 +182,16 @@ body {
 .btn-outline-secondary:hover {
     background: #f5f5f5;
     color: #1a1a1a;
-    border-color: #ccc;
+    border-color: #bbb;
 }
 
 .btn-outline-danger {
     font-size: 13px;
     border-radius: 8px;
+}
+
+.btn-sm {
+    padding: 6px 12px;
 }
 
 /* FORMULARIO */
@@ -154,11 +200,13 @@ body {
     border: 1px solid #e0e0e0;
     font-size: 14px;
     padding: 8px 12px;
+    background: #fafafa;
 }
 
 .form-control:focus, .form-select:focus {
-    border-color: #aaa;
-    box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+    border-color: #1a1a1a;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
+    background: white;
 }
 
 .form-label {
@@ -168,7 +216,12 @@ body {
     margin-bottom: 4px;
 }
 
-/* BUSCADOR */
-.buscador-wrap {
-    max-width: 420px;
+/* FORMULARIO NUEVA PRENDA */
+#formNueva {
+    background: #fafafa;
+}
+
+/* PAGINACIÓN */
+.btn.disabled {
+    opacity: 0.7;
 }
