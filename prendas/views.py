@@ -141,3 +141,12 @@ def lista_gastos(request):
         'total_gastos': total_gastos,
     }
     return render(request, 'prendas/gastos.html', context)
+
+from django.shortcuts import get_object_or_404
+
+def eliminar_gasto(request, pk):
+    gasto = get_object_or_404(Gasto, pk=pk)
+    if request.method == 'POST':
+        gasto.delete()
+        return redirect('lista_gastos')
+    return render(request, 'prendas/eliminar_gasto.html', {'gasto': gasto})

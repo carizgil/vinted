@@ -64,6 +64,9 @@
                     <td>{{ gasto.concepto }}</td>
                     <td class="text-muted small">{{ gasto.notas }}</td>
                     <td class="text-end text-danger">{{ gasto.importe }}€</td>
+                    <td class="text-end">
+                        <a href="{% url 'eliminar_gasto' gasto.pk %}" class="btn btn-sm btn-outline-danger">🗑️</a>
+                    </td>
                 </tr>
                 {% empty %}
                 <tr>
