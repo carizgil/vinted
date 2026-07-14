@@ -120,3 +120,24 @@ def exportar_excel(request):
     response['Content-Disposition'] = 'attachment; filename="prendas.xlsx"'
     wb.save(response)
     return response
+
+from django.shortcuts import render, redirect
+from .models import Gasto
+
+def lista_gastos(request):
+    if request.method == 'POST':
+        Gasto.objects.create(
+            concepto=request.POST.get('concepto'),
+            importe=request.POST.get('importe'),
+            notas=request.POST.get('notas', '')
+        )
+        return redirect('lista_gastos')
+
+    gastos = Gasto.objects.all()
+    total_gastos = sum(g.importe for g in gastos)
+
+    context = {
+        'gastos': gastos,
+        'total_gastos': total_gastos,
+    }
+    return render(request, 'prendas/gastos.html', context)

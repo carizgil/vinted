@@ -225,3 +225,82 @@ body {
 .btn.disabled {
     opacity: 0.7;
 }
+
+/* ==========================
+   GASTOS EXTRA
+   ========================== */
+
+/* Card del total de gastos (variante roja del stat-card) */
+.stat-card .text-danger {
+    color: #c62828 !important;
+}
+
+/* Card contenedora (formulario y tabla) */
+.card {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    background: white;
+}
+
+/* Formulario de nuevo gasto */
+.card h6 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: -0.2px;
+}
+
+/* TABLA DE GASTOS */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #999;
+    border-bottom: 1px solid #eee;
+    padding: 10px 12px;
+}
+
+.table tbody td {
+    font-size: 14px;
+    padding: 14px 12px;
+    border-bottom: 1px solid #f2f2f2;
+    vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.table tbody tr:hover {
+    background: #fafafa;
+}
+
+.table .text-danger {
+    font-weight: 600;
+}
+
+/* Icono/emoji de gasto en concepto (opcional, si lo añades en el HTML) */
+.gasto-concepto {
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+/* Badge para importe destacado en filas */
+.badge-gasto {
+    background: #ffebee;
+    color: #c62828;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 20px;
+}

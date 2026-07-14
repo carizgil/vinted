@@ -24,3 +24,15 @@ class Prenda(models.Model):
 
     def __str__(self):
         return self.tipo_de_prenda
+    
+class Gasto(models.Model):
+    concepto = models.CharField(max_length=200)
+    importe = models.DecimalField(max_digits=10, decimal_places=2)
+    fecha = models.DateField(auto_now_add=True)
+    notas = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.concepto} - {self.importe}€"
+
+    class Meta:
+        ordering = ['-fecha']
