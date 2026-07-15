@@ -206,7 +206,7 @@
         {% if prendas.has_other_pages %}
         <div class="d-flex justify-content-center mt-4 gap-2">
             {% if prendas.has_previous %}
-                <a href="?estado={{ estado }}&page={{ prendas.previous_page_number }}&busqueda={{ busqueda }}&talla={{ filtro_talla }}&marca={{ filtro_marca }}&orden={{ orden }}" class="btn btn-outline-secondary">← Anterior</a>
+                <a href="?estado={{ estado|urlencode }}&page={{ prendas.previous_page_number }}&busqueda={{ busqueda|urlencode }}&talla={{ filtro_talla|urlencode }}&marca={{ filtro_marca|urlencode }}&orden={{ orden|urlencode }}" class="btn btn-outline-secondary">← Anterior</a>
             {% endif %}
 
             <span class="btn btn-dark disabled">
@@ -214,7 +214,7 @@
             </span>
 
             {% if prendas.has_next %}
-                <a href="?estado={{ estado }}&page={{ prendas.next_page_number }}&busqueda={{ busqueda }}&talla={{ filtro_talla }}&marca={{ filtro_marca }}&orden={{ orden }}" class="btn btn-outline-secondary">Siguiente →</a>
+                <a href="?estado={{ estado|urlencode }}&page={{ prendas.next_page_number }}&busqueda={{ busqueda|urlencode }}&talla={{ filtro_talla|urlencode }}&marca={{ filtro_marca|urlencode }}&orden={{ orden|urlencode }}" class="btn btn-outline-secondary">Siguiente →</a>
             {% endif %}
         </div>
         {% endif %}
