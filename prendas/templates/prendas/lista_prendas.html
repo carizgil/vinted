@@ -16,7 +16,10 @@
         <a href="{% url 'exportar_excel' %}" class="btn btn-outline-secondary">📥 Exportar Excel</a>
         <button class="btn btn-dark" data-bs-toggle="collapse" data-bs-target="#formNueva">+ Añadir prenda</button>
     </div>
-    <a href="{% url 'lista_gastos' %}" class="btn btn-outline-dark">💸 Gastos extra</a>
+    <div class="d-flex gap-2">
+        <a href="{% url 'lista_gastos' %}" class="btn btn-outline-dark">💸 Gastos extra</a>
+        <a href="{% url 'logout' %}" class="btn btn-outline-secondary">Salir</a>
+    </div>
 </nav>
 <!-- BUSCADOR Y FILTROS -->
 <div class="bg-white border-bottom px-4 py-3">

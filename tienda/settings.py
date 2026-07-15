@@ -133,3 +133,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 CSRF_TRUSTED_ORIGINS = ['https://web-production-d8fed4.up.railway.app']
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'lista_prendas'
+LOGOUT_REDIRECT_URL = 'login'

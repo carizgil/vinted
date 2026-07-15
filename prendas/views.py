@@ -1,13 +1,16 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from .models import Prenda
-from .forms import PrendaForm
 from django.http import HttpResponse
+from .models import Prenda, Gasto
+from .forms import PrendaForm
 import openpyxl
 
+
+@login_required
 def lista_prendas(request):
     estado = request.GET.get('estado', 'todas')
-    
+
     busqueda = request.GET.get('busqueda', '')
     filtro_talla = request.GET.get('talla', '')
     filtro_marca = request.GET.get('marca', '')
@@ -53,7 +56,7 @@ def lista_prendas(request):
             return redirect('lista_prendas')
         else:
             print(form.errors)
-        
+
     beneficio_total = sum(
         p.beneficio() for p in Prenda.objects.filter(estado='vendido') if p.beneficio() is not None)
 
@@ -74,34 +77,38 @@ def lista_prendas(request):
         'marcas': marcas,
     })
 
+
+@login_required
 def editar_prenda(request, pk):
     prenda = get_object_or_404(Prenda, pk=pk)
     form = PrendaForm(instance=prenda)
-    
+
     if request.method == 'POST':
         form = PrendaForm(request.POST, instance=prenda)
         if form.is_valid():
             form.save()
             return redirect('lista_prendas')
-    
+
     return render(request, 'prendas/editar_prenda.html', {'form': form, 'prenda': prenda})
 
+
+@login_required
 def eliminar_prenda(request, pk):
     prenda = get_object_or_404(Prenda, pk=pk)
     if request.method == 'POST':
         prenda.delete()
         return redirect('lista_prendas')
-    return render(request, 'prendas/confirmar_eliminar.html', {'prenda': prenda})
+    return render(request, 'prendas/eliminar_prenda.html', {'prenda': prenda})
 
+
+@login_required
 def exportar_excel(request):
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Prendas"
 
-    # Cabeceras
     ws.append(['Tipo', 'Talla', 'Color', 'Marca', 'Localizador', 'Donde subido', 'Precio comprado', 'Precio vendido', 'Beneficio', 'Estado'])
 
-    # Datos
     for prenda in Prenda.objects.all():
         ws.append([
             prenda.tipo_de_prenda,
@@ -121,9 +128,8 @@ def exportar_excel(request):
     wb.save(response)
     return response
 
-from django.shortcuts import render, redirect
-from .models import Gasto
 
+@login_required
 def lista_gastos(request):
     if request.method == 'POST':
         Gasto.objects.create(
@@ -142,8 +148,8 @@ def lista_gastos(request):
     }
     return render(request, 'prendas/gastos.html', context)
 
-from django.shortcuts import get_object_or_404
 
+@login_required
 def eliminar_gasto(request, pk):
     gasto = get_object_or_404(Gasto, pk=pk)
     if request.method == 'POST':
