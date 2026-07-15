@@ -29,4 +29,5 @@ urlpatterns = [
     path('exportar/', views.exportar_excel, name='exportar_excel'),
     path('gastos/', views.lista_gastos, name='lista_gastos'),
     path('gastos/eliminar/<int:pk>/', views.eliminar_gasto, name='eliminar_gasto'),
+    path('confirmar-eliminar/<int:pk>/', views.confirmar_eliminar, name='confirmar_eliminar'),
 ]
