@@ -18,7 +18,10 @@
     </div>
     <div class="d-flex gap-2">
         <a href="{% url 'lista_gastos' %}" class="btn btn-outline-dark">💸 Gastos extra</a>
-        <a href="{% url 'logout' %}" class="btn btn-outline-secondary">Salir</a>
+        <form method="post" action="{% url 'logout' %}" class="m-0">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-secondary">Salir</button>
+        </form>
     </div>
 </nav>
 <!-- BUSCADOR Y FILTROS -->
